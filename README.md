@@ -1,5 +1,5 @@
 # aws-secure-web-architecture
-AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBridge &amp; Lambda auto-remediation.
+AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBridge , and Lambda auto-remediation.
 ## Table of Content
 - [Solution Overview](#solution-overview)
 - [Solution Architecture Diagram](#solution-architecture-diagram)
