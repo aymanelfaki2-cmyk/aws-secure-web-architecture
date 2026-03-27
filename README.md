@@ -4,7 +4,7 @@ AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBrid
 - [Solution Overview](#solution-overview)
 - [Solution Architecture Diagram](#solution-architecture-diagram)
 - [Detailed Architecture Description](#detailed-architecture-description)
-- [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure)
+- [Recommended GitHub Repository Structure](#recommended-github-repository-structure)
 
 # Solution Overview 
 
@@ -149,16 +149,15 @@ Automated actions performed
 SNS integrates with email, SMS, Slack, Teams, etc.
 
 ## 5. Defense-in-Depth Security Layers
------------------------------------------------------------------
-| Layer      			| Description 	    		|
------------------------------------------------------------------
+| Layer  | Description |
+|----------|----------|
 | Edge Protection		| CloudFront Shield 		|
 | Application Layer		| AWS WAF	    		|
 | Network Segmentation		|Private subnets, NACLs, SGs	|
 | Threat Detection		| GuardDuty			|
 | Automated Response 		| Lambda + EventBridge		|
 | Alerting 			| SNS, CloudWatch		|
------------------------------------------------------------------
+
 
 LayerDescriptionEdge ProtectionCloudFront, ShieldApplication LayerAWS WAFNetwork SegmentationPrivate subnets, NACLs, SGsThreat DetectionGuardDutyAutomated ResponseLambda + EventBridgeAlertingSNS, CloudWatch
 This aligns with the AWS Well‑Architected Security Pillar. 
