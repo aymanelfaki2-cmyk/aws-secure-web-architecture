@@ -6,7 +6,7 @@ AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBrid
 - [Architecture Diagram](#architecture-diagram)
 
 - [Solution Overview](#solution-overview)
-- [Solution Architecture Diagram](#solution-architecture-diagram)
+- [Solution Architecture Diagram](#🏗️-solution-architecture-diagram)
 - [Detailed Architecture Description](#detailed-architecture-description)
 - [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure)
 
