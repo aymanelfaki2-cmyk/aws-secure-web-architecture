@@ -33,7 +33,6 @@ This architecture deploys a secure, scalable, internet‑facing web application 
 - Real‑time remediation
 - High availability and performance
 
-
 ## 2. High-Level Architecture Overview
 Traffic is served globally through Amazon CloudFront, secured using AWS Shield and AWS WAF, then forwarded to an ALB and Auto Scaling EC2 backend to ensure availability and elasticity.
 A multi‑layered security model includes:
@@ -55,14 +54,14 @@ WAF integration for L7 filtering
 Caching & origin failover
 Traffic isolation before the ALB
 
-CloudFront reduces load on ALB/EC2 and disguises origin endpoints. [aws pr | Word]
+CloudFront reduces load on ALB/EC2 and disguises origin endpoints. 
 
 ### 3.2 AWS Shield (DDoS Protection)
 AWS Shield Standard protects CloudFront & ALB against L3/L4 DDoS attacks. Shield Advanced adds:
 
 Cost protection
 DDoS Response Team support
-Enhanced telemetry [aws pr | Word]
+Enhanced telemetry 
 
 
 ### 3.3 AWS WAF (Application Firewall)
@@ -75,7 +74,7 @@ IP reputation lists
 Custom rules per endpoint
 Auto‑block list updated by Lambda
 
-WAF stops threats before they hit the ALB or EC2. [aws pr | Word]
+WAF stops threats before they hit the ALB or EC2. 
 
 ### 3.4 Application Load Balancer (ALB)
 ALB distributes traffic to EC2 and supports:
@@ -94,7 +93,7 @@ CPU
 Request count
 Custom metrics
 
-Outbound internet access is through NAT Gateways only. [aws pr | Word]
+Outbound internet access is through NAT Gateways only.
 
 ## 4. Threat Detection & Automated Remediation
 
@@ -114,7 +113,7 @@ Malware communications
 API anomalies
 Traffic from known malicious IPs
 
-Findings are streamed to EventBridge. [aws pr | Word]
+Findings are streamed to EventBridge. 
 
 ### 4.2 Amazon EventBridge
 Routes GuardDuty findings to:
@@ -126,7 +125,7 @@ Example rule:
 If finding type = UnauthorizedAccess:EC2/SSHBruteForce
 Trigger Lambda → Update WAF → Notify Admin Team
 
-EventBridge enables scalable event‑driven operations. [aws pr | Word]
+EventBridge enables scalable event‑driven operations.
 
 ### 4.3 AWS Lambda (Automated WAF Updater)
 Lambda:
@@ -137,7 +136,7 @@ Inserts IP into WAF IPSet
 Logs to CloudWatch
 Updates WAF WebACL
 
-This creates real‑time autonomous threat mitigation. [aws pr | Word]
+This creates real‑time autonomous threat mitigation. 
 
 ### 4.4 Amazon SNS (Notifications)
 SNS alerts the security team with:
@@ -147,7 +146,7 @@ Affected resource
 Threat source IP
 Automated actions performed
 
-SNS integrates with email, SMS, Slack, Teams, etc. [aws pr | Word]
+SNS integrates with email, SMS, Slack, Teams, etc.
 
 ## 5. Defense-in-Depth Security Layers
 -----------------------------------------------------------------
@@ -162,7 +161,7 @@ SNS integrates with email, SMS, Slack, Teams, etc. [aws pr | Word]
 -----------------------------------------------------------------
 
 LayerDescriptionEdge ProtectionCloudFront, ShieldApplication LayerAWS WAFNetwork SegmentationPrivate subnets, NACLs, SGsThreat DetectionGuardDutyAutomated ResponseLambda + EventBridgeAlertingSNS, CloudWatch
-This aligns with the AWS Well‑Architected Security Pillar. [aws pr | Word]
+This aligns with the AWS Well‑Architected Security Pillar. 
 
 ## 6. Traffic Flow Summary
 
@@ -174,7 +173,7 @@ GuardDuty monitors logs
 Threat detected → EventBridge → Lambda
 Lambda updates WAF IPSet
 SNS notifies Admin Team
-Malicious IP blocked for future attempts [aws pr | Word]
+Malicious IP blocked for future attempts
 
 
 ## 7. Operational Considerations
@@ -183,12 +182,12 @@ High availability: multi‑AZ EC2 + ALB
 Scalability: Auto Scaling, CloudFront caching
 Security: WAF, Shield, GuardDuty
 Cost optimization: caching efficiency
-Monitoring: CloudWatch, GuardDuty, log analysis [aws pr | Word]
+Monitoring: CloudWatch, GuardDuty, log analysis
 
 
 ## 8. Conclusion
 This architecture provides a highly secure, scalable, and resilient platform. By combining edge security, active threat detection, automated mitigation, and real‑time alerting, it ensures strong protection while delivering optimal performance.
-Classification: Public [aws pr | Word]
+Classification: Public 
 
 # Recommended GitHub Repository Structure
 /diagrams
