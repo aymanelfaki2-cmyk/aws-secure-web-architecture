@@ -147,7 +147,7 @@ Automated actions performed
 SNS integrates with email, SMS, Slack, Teams, etc. [aws pr | Word]
 
 5. Defense-in-Depth Security Layers
------------------------------------------------------------------
+[-----------------------------------------------------------------
 | Layer      			| Description 	    		|
 -----------------------------------------------------------------
 | Edge Protection		| CloudFront Shield 		|
@@ -156,7 +156,7 @@ SNS integrates with email, SMS, Slack, Teams, etc. [aws pr | Word]
 | Threat Detection		| GuardDuty			|
 | Automated Response 		| Lambda + EventBridge		|
 | Alerting 			| SNS, CloudWatch		|
------------------------------------------------------------------
+-----------------------------------------------------------------]
 
 LayerDescriptionEdge ProtectionCloudFront, ShieldApplication LayerAWS WAFNetwork SegmentationPrivate subnets, NACLs, SGsThreat DetectionGuardDutyAutomated ResponseLambda + EventBridgeAlertingSNS, CloudWatch
 This aligns with the AWS Well‑Architected Security Pillar. [aws pr | Word]
