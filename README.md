@@ -1,16 +1,12 @@
 # aws-secure-web-architecture
 AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBridge &amp; Lambda auto-remediation.
 ## Table of Content
-
 - [Solution Overview](#solution-overview)
-- [Architecture Diagram](#architecture-diagram)
-
-- [Solution Overview](#solution-overview)
-- [Solution Architecture Diagram](#🏗️-solution-architecture-diagram)
+- [Solution Architecture Diagram](#solution-architecture-diagram)
 - [Detailed Architecture Description](#detailed-architecture-description)
 - [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure)
 
-# 📘 Solution Overview 
+# Solution Overview 
 
 This solution deploys a secure, scalable, and highly available public‑facing web application on AWS. It delivers global content distribution, intelligent threat detection, auto‑remediation, and multi‑layered security hardening.
 Incoming client traffic is delivered through Amazon CloudFront, routed to an Application Load Balancer, and served by an EC2 Auto Scaling Group.
@@ -23,7 +19,7 @@ The architecture ensures:
 
 It uses WAF managed rules, custom rules, and rate‑limiting to defend against SQL injection, XSS, bots, and volumetric threats. The system forms a fully automated security pipeline, ensuring strong defense with minimal human intervention. 
 
-# 🏗️ Solution Architecture Diagram
+# Solution Architecture Diagram
 
 ![Architecture](./aws_arch.png)
 
@@ -194,7 +190,7 @@ Monitoring: CloudWatch, GuardDuty, log analysis [aws pr | Word]
 This architecture provides a highly secure, scalable, and resilient platform. By combining edge security, active threat detection, automated mitigation, and real‑time alerting, it ensures strong protection while delivering optimal performance.
 Classification: Public [aws pr | Word]
 
-# 📁 Recommended GitHub Repository Structure
+# Recommended GitHub Repository Structure
 /diagrams
    aws_arch.png
 
