@@ -3,9 +3,12 @@ AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBrid
 ## Table of Content
 
 - [Solution Overview](#solution-overview)
+- [Architecture Diagram](#architecture-diagram)
+
+- [Solution Overview](#solution-overview)
 - [Solution Architecture Diagram](#solution-architecture-diagram)
-- [Detailed Architecture Description](#detailed-architecture-description).
-- [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure).
+- [Detailed Architecture Description](#detailed-architecture-description)
+- [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure)
 
 # 📘 Solution Overview 
 
@@ -25,7 +28,7 @@ It uses WAF managed rules, custom rules, and rate‑limiting to defend against S
 ![Architecture](./aws_arch.png)
 
 
-# 📄 Detailed Architecture Description
+# Detailed Architecture Description
 ## 1. Introduction
 This architecture deploys a secure, scalable, internet‑facing web application using AWS managed services. It integrates CloudFront, ALB, EC2 Auto Scaling, AWS WAF, Shield, GuardDuty, EventBridge, Lambda, and SNS to achieve:
 - Defense‑in‑depth
