@@ -2,10 +2,10 @@
 AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBridge &amp; Lambda auto-remediation.
 ## Table of Content
 
-- [Solution Overview](#Solution-Overview)
-- [Solution Architecture Diagram](#Solution-Architecture-Diagram)
-- [Detailed Architecture Description](#Detailed-Architecture-Description).
-- [Recommended GitHub Repository Structure](#Recommended-GitHub-Repository-Structure).
+- [Solution Overview](#solution-overview)
+- [Solution Architecture Diagram](#solution-architecture-diagram)
+- [Detailed Architecture Description](#detailed-architecture-description).
+- [Recommended GitHub Repository Structure](#recommended-gitHub-repository-structure).
 
 # 📘 Solution Overview 
 
