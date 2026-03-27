@@ -159,7 +159,6 @@ SNS integrates with email, SMS, Slack, Teams, etc.
 | Alerting 			| SNS, CloudWatch		|
 
 
-LayerDescriptionEdge ProtectionCloudFront, ShieldApplication LayerAWS WAFNetwork SegmentationPrivate subnets, NACLs, SGsThreat DetectionGuardDutyAutomated ResponseLambda + EventBridgeAlertingSNS, CloudWatch
 This aligns with the AWS Well‑Architected Security Pillar. 
 
 ## 6. Traffic Flow Summary
