@@ -4,7 +4,6 @@ AWS architecture for a secure web app with CloudFront, WAF, GuardDuty, EventBrid
 - [Solution Overview](#solution-overview)
 - [Solution Architecture Diagram](#solution-architecture-diagram)
 - [Detailed Architecture Description](#detailed-architecture-description)
-- [Recommended GitHub Repository Structure](#recommended-github-repository-structure)
 
 # Solution Overview 
 
@@ -69,28 +68,28 @@ If Shield Advanced is used (optional):
  
 AWS WAF enforces application security at the edge and at the ALB.
 Rule types configured:
-•	AWS Managed Rules (SQLi, XSS, bot control)
-•	Rate-based rules (DDoS mitigation)
-•	Custom rules specific to application API endpoints
-•	Automated IP block lists populated via Lambda
+- AWS Managed Rules (SQLi, XSS, bot control)
+- Rate-based rules (DDoS mitigation)
+- Custom rules specific to application API endpoints
+- Automated IP block lists populated via Lambda
 WAF blocks malicious HTTP requests before they reach ALB or EC2.
 
 ### 3.4 Application Load Balancer (ALB)
 
 The ALB routes HTTPS requests to the backend Amazon EC2 instances.
 Functions include:
-•	SSL/TLS termination using ACM certificates
-•	Path-based and host-based routing
-•	Health checks for Auto Scaling
-•	Logging to Amazon S3 for audit and analytics
+- SSL/TLS termination using ACM certificates
+- Path-based and host-based routing
+- Health checks for Auto Scaling
+- Logging to Amazon S3 for audit and analytics
 
 ### 3.5 EC2 Auto Scaling Group
 
 The web application runs on EC2 instances located in private subnets across multiple Availability Zones.
 Auto Scaling provides:
-•	Dynamic scaling on CPU, request count, or custom CloudWatch metrics
-•	High availability and resilience
-•	Zero-downtime scaling operations
+- Dynamic scaling on CPU, request count, or custom CloudWatch metrics
+- High availability and resilience
+- Zero-downtime scaling operations
 EC2 instances access the internet only through NAT gateways, ensuring controlled outbound communication.
 
 ## 4. Threat Detection & Automated Remediation
@@ -98,23 +97,23 @@ EC2 instances access the internet only through NAT gateways, ensuring controlled
 ### 4.1 Amazon GuardDuty
 
 GuardDuty continuously monitors and analyze:
-•	VPC Flow Logs
-•	DNS query logs
-•	CloudTrail events
-•	EBS anomaly activity
+- VPC Flow Logs
+- DNS query logs
+- CloudTrail events
+- EBS anomaly activity
 GuardDuty detects:
-•	Brute-force login attempts
-•	Port scanning
-•	Malware command-and-control traffic
-•	Unusual or suspicious API calls
-•	Traffic from known malicious IPs
+- Brute-force login attempts
+- Port scanning
+- Malware command-and-control traffic
+- Unusual or suspicious API calls
+- Traffic from known malicious IPs
 Findings are categorized by severity and pushed to Amazon EventBridge.
 
 
 ### 4.2 Amazon EventBridge
 Routes GuardDuty findings to:
 EventBridge rules filter and route GuardDuty findings to Lambda (auto‑remediation function)
-Example rule:
+- Example rule:
 If finding type = UnauthorizedAccess:EC2/SSHBruteForce
 Trigger Lambda → Update WAF → Notify Admin Team
 
@@ -134,14 +133,14 @@ This enables real-time automated threat mitigation.
 ### 4.4 Amazon SNS (Notifications)
 
 SNS delivers notifications to:
-•	Security Admin team (email)
-•	Incident response channels (Slack, Teams via webhook)
-•	Operational dashboards
+- Security Admin team (email)
+- Incident response channels (Slack, Teams via webhook)
+- Operational dashboards
 Notifications include:
-•	Finding severity
-•	Affected resources
-•	Threat source
-•	Automated actions taken
+- Finding severity
+- Affected resources
+- Threat source
+- Automated actions taken
 
 
 ## 5. Defense-in-Depth Security Layers
@@ -173,21 +172,13 @@ o	SNS sends notifications
 
 ## 7. Operational Considerations
 
-•	High availability: Multi AZ deployment across backend layers ( multi‑AZ EC2 + ALB )
-•	Scalability: Auto Scaling, CloudFront caching, ALB elasticity
-•	Security: Defense in depth, automated remediation ( WAF, Shield, GuardDuty )
-•	Cost optimization: Caching reduces origin load and bandwidth
-•	Monitoring: CloudWatch, GuardDuty, log analysis
+- High availability: Multi AZ deployment across backend layers ( multi‑AZ EC2 + ALB )
+- Scalability: Auto Scaling, CloudFront caching, ALB elasticity
+- Security: Defense in depth, automated remediation ( WAF, Shield, GuardDuty )
+- Cost optimization: Caching reduces origin load and bandwidth
+- Monitoring: CloudWatch, GuardDuty, log analysis
 
 ## 8. Conclusion
 This architecture provides a robust, secure, and scalable platform for hosting internet-facing applications. By combining AWS edge security, WAF rulesets, threat detection services, and automated mitigation workflows, the solution minimizes risk while ensuring the application remains resilient and responsive under varying load and threat conditions.
 
-# Recommended GitHub Repository Structure
-/diagrams
-   aws_arch.png
 
-/docs
-   Detailed_Architecture.md
-   aws_pr.docx
-
-README.md
