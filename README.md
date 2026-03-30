@@ -17,7 +17,7 @@ The architecture ensures:
 - Automated remediation
 - Comprehensive DDoS & application‑layer protection
 
-It uses WAF managed rules, custom rules, and rate‑limiting to defend against SQL injection, XSS, bots, and volumetric threats. The system forms a fully automated security pipeline, ensuring strong defense with minimal human intervention. 
+This solution defends against SQL injection, XSS, bots, and volumetric threats. The system forms a fully automated security pipeline, ensuring strong defense with minimal human intervention. 
 
 # Solution Architecture Diagram
 
@@ -44,83 +44,76 @@ A multi‑layered security model includes:
 
 This design ensures high performance, fault tolerance, and centralized monitoring.
 
+
 ## 3. Architecture Components
 
 ### 3.1 Amazon CloudFront (CDN + Edge Security)
-CloudFront provides global, low‑latency delivery of application content with built‑in:
-
-Shield Standard DDoS protection
-WAF integration for L7 filtering
-Caching & origin failover
-Traffic isolation before the ALB
-
-CloudFront reduces load on ALB/EC2 and disguises origin endpoints. 
+CloudFront serves as the application’s global entry point, providing:
+•	Low-latency content delivery from AWS edge locations
+•	Traffic isolation before the ALB
+•	Integrated AWS Shield Standard protection
+•	Native AWS WAF integration for Layer 7 (HTTP/S) filtering
+•	Support for origin failover and caching policies
+CloudFront reduces load on the origin infrastructure and limits direct exposure of the ALB to the internet.
 
 ### 3.2 AWS Shield (DDoS Protection)
-AWS Shield Standard protects CloudFront & ALB against L3/L4 DDoS attacks. Shield Advanced adds:
 
-Cost protection
-DDoS Response Team support
-Enhanced telemetry 
-
+AWS Shield Standard automatically protects CloudFront and ALB from common Layer 3/Layer 4 DDoS attacks.
+If Shield Advanced is used (optional):
+•	Additional detection metrics
+•	Cost protection
+•	AWS DDoS Response Team (DRT) escalation
+•	Deeper visibility through CloudWatch metrics
 
 ### 3.3 AWS WAF (Application Firewall)
-AWS WAF filters malicious HTTP(S) requests at both CloudFront and ALB.
-Rules include:
-
-AWS Managed Rules (SQLi, XSS)
-Rate‑based rules
-IP reputation lists
-Custom rules per endpoint
-Auto‑block list updated by Lambda
-
-WAF stops threats before they hit the ALB or EC2. 
+ 
+AWS WAF enforces application security at the edge and at the ALB.
+Rule types configured:
+•	AWS Managed Rules (SQLi, XSS, bot control)
+•	Rate-based rules (DDoS mitigation)
+•	Custom rules specific to application API endpoints
+•	Automated IP block lists populated via Lambda
+WAF blocks malicious HTTP requests before they reach ALB or EC2.
 
 ### 3.4 Application Load Balancer (ALB)
-ALB distributes traffic to EC2 and supports:
 
-TLS termination via ACM
-Health checks for Auto Scaling
-S3 logging
-Intelligent routing
-
- [aws pr | Word]
+The ALB routes HTTPS requests to the backend Amazon EC2 instances.
+Functions include:
+•	SSL/TLS termination using ACM certificates
+•	Path-based and host-based routing
+•	Health checks for Auto Scaling
+•	Logging to Amazon S3 for audit and analytics
 
 ### 3.5 EC2 Auto Scaling Group
-EC2 instances run in private subnets and scale dynamically based on:
 
-CPU
-Request count
-Custom metrics
-
-Outbound internet access is through NAT Gateways only.
+The web application runs on EC2 instances located in private subnets across multiple Availability Zones.
+Auto Scaling provides:
+•	Dynamic scaling on CPU, request count, or custom CloudWatch metrics
+•	High availability and resilience
+•	Zero-downtime scaling operations
+EC2 instances access the internet only through NAT gateways, ensuring controlled outbound communication.
 
 ## 4. Threat Detection & Automated Remediation
 
 ### 4.1 Amazon GuardDuty
-GuardDuty analyzes:
 
-VPC Flow Logs
-DNS logs
-CloudTrail logs
-EBS anomaly behavior
+GuardDuty continuously monitors and analyze:
+•	VPC Flow Logs
+•	DNS query logs
+•	CloudTrail events
+•	EBS anomaly activity
+GuardDuty detects:
+•	Brute-force login attempts
+•	Port scanning
+•	Malware command-and-control traffic
+•	Unusual or suspicious API calls
+•	Traffic from known malicious IPs
+Findings are categorized by severity and pushed to Amazon EventBridge.
 
-It detects:
-
-Port scanning
-Brute force attempts
-Malware communications
-API anomalies
-Traffic from known malicious IPs
-
-Findings are streamed to EventBridge. 
 
 ### 4.2 Amazon EventBridge
 Routes GuardDuty findings to:
-
-Lambda (auto‑remediation)
-SNS (alerting)
-
+EventBridge rules filter and route GuardDuty findings to Lambda (auto‑remediation function)
 Example rule:
 If finding type = UnauthorizedAccess:EC2/SSHBruteForce
 Trigger Lambda → Update WAF → Notify Admin Team
@@ -128,34 +121,37 @@ Trigger Lambda → Update WAF → Notify Admin Team
 EventBridge enables scalable event‑driven operations.
 
 ### 4.3 AWS Lambda (Automated WAF Updater)
-Lambda:
 
-Receives GuardDuty finding
-Extracts attacker IP
-Inserts IP into WAF IPSet
-Logs to CloudWatch
-Updates WAF WebACL
-
-This creates real‑time autonomous threat mitigation. 
+Lambda functions process GuardDuty events and update AWS WAF configurations.
+Workflow:
+1.	Lambda parses the GuardDuty finding
+2.	Extracts the malicious IP or threat indicator
+3.	Adds the IP to a dedicated WAF IPSet (block list)
+4.	Logs the action to CloudWatch Logs
+5.	Optionally sends structured logs to SIEM tools
+This enables real-time automated threat mitigation.
 
 ### 4.4 Amazon SNS (Notifications)
-SNS alerts the security team with:
 
-Severity
-Affected resource
-Threat source IP
-Automated actions performed
+SNS delivers notifications to:
+•	Security Admin team (email)
+•	Incident response channels (Slack, Teams via webhook)
+•	Operational dashboards
+Notifications include:
+•	Finding severity
+•	Affected resources
+•	Threat source
+•	Automated actions taken
 
-SNS integrates with email, SMS, Slack, Teams, etc.
 
 ## 5. Defense-in-Depth Security Layers
 | Layer  | Description |
 |----------|----------|
-| Edge Protection		| CloudFront Shield 		|
+| Edge Protection		| CloudFront, AWS Shield 		|
 | Application Layer		| AWS WAF	    		|
-| Network Segmentation		|Private subnets, NACLs, SGs	|
+| Network Segmentation		|Private subnets, NACLs, •	Security groups	|
 | Threat Detection		| GuardDuty			|
-| Automated Response 		| Lambda + EventBridge		|
+| Automated Response 		| EventBridge + Lambda + WAF rules		|
 | Alerting 			| SNS, CloudWatch		|
 
 
@@ -163,29 +159,28 @@ This aligns with the AWS Well‑Architected Security Pillar.
 
 ## 6. Traffic Flow Summary
 
-User → CloudFront
-CloudFront + WAF filter traffic
-ALB receives valid traffic
-ALB → EC2 Auto Scaling
-GuardDuty monitors logs
-Threat detected → EventBridge → Lambda
-Lambda updates WAF IPSet
-SNS notifies Admin Team
-Malicious IP blocked for future attempts
+1.	User sends HTTP(S) request
+2.	CloudFront inspects traffic using WAF
+3.	Clean traffic is forwarded to ALB
+4.	ALB routes request to EC2 Auto Scaling instances
+5.	GuardDuty monitors infrastructure behavior
+6.	On detection: 
+o	EventBridge triggers Lambda
+o	Lambda updates WAF IP sets
+o	SNS sends notifications
+7.	Future traffic from malicious IPs is blocked automatically
 
 
 ## 7. Operational Considerations
 
-High availability: multi‑AZ EC2 + ALB
-Scalability: Auto Scaling, CloudFront caching
-Security: WAF, Shield, GuardDuty
-Cost optimization: caching efficiency
-Monitoring: CloudWatch, GuardDuty, log analysis
-
+•	High availability: Multi AZ deployment across backend layers ( multi‑AZ EC2 + ALB )
+•	Scalability: Auto Scaling, CloudFront caching, ALB elasticity
+•	Security: Defense in depth, automated remediation ( WAF, Shield, GuardDuty )
+•	Cost optimization: Caching reduces origin load and bandwidth
+•	Monitoring: CloudWatch, GuardDuty, log analysis
 
 ## 8. Conclusion
-This architecture provides a highly secure, scalable, and resilient platform. By combining edge security, active threat detection, automated mitigation, and real‑time alerting, it ensures strong protection while delivering optimal performance.
-Classification: Public 
+This architecture provides a robust, secure, and scalable platform for hosting internet-facing applications. By combining AWS edge security, WAF rulesets, threat detection services, and automated mitigation workflows, the solution minimizes risk while ensuring the application remains resilient and responsive under varying load and threat conditions.
 
 # Recommended GitHub Repository Structure
 /diagrams
