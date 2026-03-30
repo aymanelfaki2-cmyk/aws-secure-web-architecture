@@ -49,21 +49,21 @@ This design ensures high performance, fault tolerance, and centralized monitorin
 
 ### 3.1 Amazon CloudFront (CDN + Edge Security)
 CloudFront serves as the application’s global entry point, providing:
-•	Low-latency content delivery from AWS edge locations
-•	Traffic isolation before the ALB
-•	Integrated AWS Shield Standard protection
-•	Native AWS WAF integration for Layer 7 (HTTP/S) filtering
-•	Support for origin failover and caching policies
+- Low-latency content delivery from AWS edge locations
+- Traffic isolation before the ALB
+- Integrate with AWS Shield Standard protection
+- Integrate with AWS WAF integration for Layer 7 (HTTP/S) filtering
+- Support for origin failover and caching policies
 CloudFront reduces load on the origin infrastructure and limits direct exposure of the ALB to the internet.
 
 ### 3.2 AWS Shield (DDoS Protection)
 
 AWS Shield Standard automatically protects CloudFront and ALB from common Layer 3/Layer 4 DDoS attacks.
 If Shield Advanced is used (optional):
-•	Additional detection metrics
-•	Cost protection
-•	AWS DDoS Response Team (DRT) escalation
-•	Deeper visibility through CloudWatch metrics
+- Additional detection metrics
+- Cost protection
+- AWS DDoS Response Team (DRT) escalation
+- Deeper visibility through CloudWatch metrics
 
 ### 3.3 AWS WAF (Application Firewall)
  
